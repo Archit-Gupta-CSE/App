@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
@@ -36,7 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register'),
-        backgroundColor: Color.fromARGB(255, 8, 109, 167),
+        backgroundColor: const Color.fromARGB(255, 8, 109, 167),
       ),
       body: Column(
         children: [
