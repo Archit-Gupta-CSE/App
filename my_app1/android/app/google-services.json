@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "249650635127",
+    "project_id": "my-app-arc-react",
+    "storage_bucket": "my-app-arc-react.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249650635127:android:85fa7319fc579a14184172",
+        "android_client_info": {
+          "package_name": "com.arc_reactor.my_app1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZbmjX4_3DL0uzqtxjp3Aymzt98lplOu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
