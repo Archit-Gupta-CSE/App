@@ -12,14 +12,15 @@ void main() {
   runApp(MaterialApp(
     title: 'MY APP 01',
     theme: ThemeData(
-      colorScheme:
-          ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 8, 109, 167)),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 8, 109, 167)),
       useMaterial3: true,
     ),
     home: const HomePage(),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
+      '/notes/': (context) => const NotesView(),
     },
   ));
 }
@@ -101,7 +102,7 @@ class _NotesViewState extends State<NotesView> {
             },
           )
         ],
-        backgroundColor: Color.fromARGB(255, 8, 109, 167),
+        backgroundColor: const Color.fromARGB(255, 8, 109, 167),
       ),
       body: const Text('Hello User!'),
     );
