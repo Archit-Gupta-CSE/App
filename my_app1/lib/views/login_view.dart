@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app1/constants/routes.dart';
-import 'dart:developer' as devtools show log;
+import 'package:my_app1/services/auth/auth_exceptions.dart';
+import 'package:my_app1/services/auth/auth_service.dart';
 
 import 'package:my_app1/utilities/show_error_dialog.dart';
 
@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
-        backgroundColor: Color.fromARGB(255, 8, 109, 167),
+        backgroundColor: const Color.fromARGB(255, 8, 109, 167),
       ),
       body: Column(
         children: [
@@ -60,12 +60,12 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await AuthService.firebase().logIn(
                   email: email,
                   password: password,
                 );
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified ?? false) {
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailVerified ?? false) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     notesRoute,
                     (route) => false,
@@ -73,37 +73,30 @@ class _LoginViewState extends State<LoginView> {
                 } else {
                   Navigator.of(context).pushNamed(verifyRoute);
                 }
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  await showErrorDialog(
-                    context,
-                    'User Not Found !',
-                  );
-                } else if (e.code == 'wrong-password') {
-                  await showErrorDialog(
-                    context,
-                    'Wrong Password !',
-                  );
-                } else if (e.code == 'invalid-credential') {
-                  await showErrorDialog(
-                    context,
-                    'Invalid Credentials !',
-                  );
-                } else if (e.code == 'channel-error') {
-                  await showErrorDialog(
-                    context,
-                    'Enter Your Email And Password !',
-                  );
-                } else {
-                  await showErrorDialog(
-                    context,
-                    'Error: ${e.code}',
-                  );
-                }
-              } catch (e) {
+              } on UserNotFoundException {
                 await showErrorDialog(
                   context,
-                  e.toString(),
+                  'User Not Found !',
+                );
+              } on WrongPasswordException {
+                await showErrorDialog(
+                  context,
+                  'Wrong Password !',
+                );
+              } on InvalidCredentialsException {
+                await showErrorDialog(
+                  context,
+                  'Invalid Credentials !',
+                );
+              } on ChannelErrorException {
+                await showErrorDialog(
+                  context,
+                  'Enter Your Email And Password !',
+                );
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  ' Authentication Error ',
                 );
               }
             },
