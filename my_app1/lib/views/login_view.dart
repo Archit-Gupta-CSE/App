@@ -32,6 +32,7 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,19 +42,74 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Column(
         children: [
-          TextField(
-            controller: _email,
-            decoration: const InputDecoration(hintText: 'Enter Your Email'),
-            enableSuggestions: true,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
+          Container(
+            height: 5,
           ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(hintText: 'Enter Your Password'),
+          Center(
+            child: SizedBox(
+              width: 300.0,
+              child: TextField(
+                controller: _email,
+                decoration: InputDecoration(
+                  hintText: 'Enter Your Email',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(11),
+                    borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 208, 92, 34),
+                      width: 2,
+                    ),
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.email,
+                  ),
+                ),
+                enableSuggestions: true,
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(
+                    fontSize: 15.0, height: 1.5, color: Colors.black),
+              ),
+            ),
+          ),
+          Container(
+            height: 5,
+          ),
+          Center(
+            child: SizedBox(
+              width: 300.0,
+              child: TextField(
+                controller: _password,
+                obscureText: _obscureText,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: InputDecoration(
+                    hintText: 'Enter Your Password',
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(11),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 208, 92, 34),
+                          width: 2,
+                        )),
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    )),
+                style: const TextStyle(
+                    fontSize: 15.0, height: 1.5, color: Colors.black),
+              ),
+            ),
           ),
           TextButton(
             onPressed: () async {
